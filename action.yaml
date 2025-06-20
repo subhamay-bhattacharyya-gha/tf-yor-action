@@ -45,7 +45,7 @@ runs:
       env:
         LOG_LEVEL: DEBUG
       with:
-        directory: ${{ github.workspace }}/${{ inputs.terraform-dir }}
+        directory: ${{ github.workspace }}/${{ inputs.terraform-dir }} 
         # skip_directory: test
         # skip_tags: git_modifiers,git_commit,git_repository
         tag_groups: git
