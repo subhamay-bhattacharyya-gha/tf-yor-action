@@ -45,7 +45,7 @@ runs:
       env:
         LOG_LEVEL: DEBUG
       with:
-        directory: ${{ gihub.workspace }}/${{ inputs.terraform-dir }}
+        directory: ${{ github.workspace }}/${{ inputs.terraform-dir }}
         tag_groups: git
         output_format: json
 
