@@ -45,11 +45,8 @@ runs:
       env:
         LOG_LEVEL: DEBUG
       with:
-        directory: ${{ github.workspace }}/${{ inputs.terraform-dir }} 
-        # skip_directory: test
-        # skip_tags: git_modifiers,git_commit,git_repository
+        directory: ${{ github.workspace }}/{{ inputs.terraform-dir }}
         tag_groups: git
-        # custom_tags: path/to/plugin.so
         output_format: json
 
     - name: Commit tag changes
