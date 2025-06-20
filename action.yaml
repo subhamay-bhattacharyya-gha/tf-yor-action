@@ -43,7 +43,12 @@ runs:
     - name: Set up Yor
       shell: bash
       run: |
-        curl -Lo yor.tar.gz https://github.com/bridgecrewio/yor/releases/latest/download/yor_$(uname -s)_$(uname -m).tar.gz
+        YOR_VERSION="0.1.215"
+        YOR_OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+        YOR_ARCH=$(uname -m)
+        if [[ "$YOR_ARCH" == "x86_64" ]]; then YOR_ARCH="amd64"; fi
+
+        curl -Lo yor.tar.gz "https://github.com/bridgecrewio/yor/releases/download/v${YOR_VERSION}/yor_${YOR_VERSION}_${YOR_OS}_${YOR_ARCH}.tar.gz"
         mkdir -p yor-bin
         tar -xzf yor.tar.gz -C yor-bin
         echo "$PWD/yor-bin" >> $GITHUB_PATH
