@@ -43,15 +43,18 @@ runs:
     - name: Set up Yor
       shell: bash
       run: |
-        YOR_VERSION="0.1.215"
-        YOR_OS=$(uname -s | tr '[:upper:]' '[:lower:]')
-        YOR_ARCH=$(uname -m)
-        if [[ "$YOR_ARCH" == "x86_64" ]]; then YOR_ARCH="amd64"; fi
+        YOR_VERSION="0.1.200"
+        OS=$(uname -s | tr '[:upper:]' '[:lower:]')  # linux or darwin
+        ARCH=$(uname -m)
+        if [[ "$ARCH" == "x86_64" ]]; then ARCH="amd64"; fi
+        if [[ "$ARCH" == "arm64"* ]] || [[ "$ARCH" == "aarch64"* ]]; then ARCH="arm64"; fi
 
-        curl -Lo yor.tar.gz "https://github.com/bridgecrewio/yor/releases/download/v${YOR_VERSION}/yor_${YOR_VERSION}_${YOR_OS}_${YOR_ARCH}.tar.gz"
-        mkdir -p yor-bin
+        URL="https://github.com/bridgecrewio/yor/releases/download/v$YOR_VERSION/yor_${YOR_VERSION}_${OS}_${ARCH}.tar.gz"
+        echo "Downloading Yor from: $URL"
+        curl -sfL "$URL" -o yor.tar.gz
         tar -xzf yor.tar.gz -C yor-bin
         echo "$PWD/yor-bin" >> $GITHUB_PATH
+
 
     - name: Run Yor tagging
       shell: bash
