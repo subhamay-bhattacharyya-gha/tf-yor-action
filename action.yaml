@@ -1,44 +1,55 @@
-name: 'Action Name'
-description: 'Action Description'
+name: "Yor Git Metadata Tagging"
+description: "Composite action to tag Terraform files with Yor Git metadata and optionally commit them."
 
 inputs:
-  input-1:
-    description: Input description.
+  terraform-dir:
+    description: "Relative path to the directory containing Terraform configuration files (e.g., 'tf', 'infrastructure')."
     required: false
-    default: default-value
-  input-2:
-    description: Input description.
+    type: string
+    default: "tf"
+
+  release-tag:
+    description: "Git release tag to check out. If omitted, the latest commit on the default branch is used."
     required: false
-    default: default-value
-  input-3:
-    description: Input description.
+    type: string
+    default: ""
+
+  commit-changes:
+    description: "Whether to commit tagged files. Accepts 'true' or 'false'."
     required: false
-    default: default-value
-  github-token:
-    description: 'GitHub token'
-    required: true
+    type: boolean
+    default: true
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: 3.x
-
-    - name: Sample step to call GitHub API
+    - name: Set Checkout Ref
+      id: set-ref
       shell: bash
-      env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
-        ISSUE_NUMBER="${{ github.event.issue.number }}"
-        REPO="${{ github.repository }}"
-        OWNER=$(echo $REPO | cut -d'/' -f1)
-        BRANCH_NAME="${{ steps.create-branch.outputs.branch-name }}"
-        COMMENT_BODY="Branch [$BRANCH_NAME](https://github.com/$OWNER/$REPO/tree/$BRANCH_NAME) created 🚀"
+        if [[ -n "${{ inputs.release-tag }}" ]]; then
+          echo "ref=${{ inputs.release-tag }}" >> $GITHUB_OUTPUT
+        else
+          echo "ref=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+        fi
 
-        curl -s -X POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Content-Type: application/json" \
-          -d "{\"body\": \"$COMMENT_BODY\"}" \
-          https://api.github.com/repos/$REPO/issues/$ISSUE_NUMBER/comments
+    - name: Checkout Repo
+      id: checkout
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ steps.set-ref.outputs.ref }}
+        fetch-depth: 0
+
+    - name: Run yor action
+      uses: bridgecrewio/yor-action@main
+      env:
+        LOG_LEVEL: DEBUG
+      with:
+        directory: ${{ github.workspace }}/${{ inputs.terraform-dir }}
+        tag_groups: git
+        output_format: json
+
+    - name: Commit tag changes
+      if: ${{ inputs.commit-changes == 'true' }}
+      uses: stefanzweifel/git-auto-commit-action@v4
+
