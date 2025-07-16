@@ -20,6 +20,11 @@ inputs:
     type: boolean
     default: true
 
+  github-token:
+    description: "GitHub token used for authenticated API requests by Yor (to avoid rate limits)."
+    required: false
+    default: ${{ github.token }}
+
 runs:
   using: "composite"
   steps:
@@ -44,6 +49,7 @@ runs:
       uses: bridgecrewio/yor-action@main
       env:
         LOG_LEVEL: DEBUG
+        GITHUB_TOKEN: ${{ inputs.github-token }}  # ✅ Authenticated to avoid rate limits
       with:
         directory: ${{ github.workspace }}/${{ inputs.terraform-dir }}
         tag_groups: git
@@ -52,4 +58,3 @@ runs:
     - name: Commit tag changes
       if: ${{ inputs.commit-changes == 'true' }}
       uses: stefanzweifel/git-auto-commit-action@v6
-
