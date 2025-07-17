@@ -1,51 +1,55 @@
-# GitHub Action Template Repository
+# Yor Git Metadata Tagging Action
 
-![Release](https://github.com/subhamay-bhattacharyya-gha/github-action-template/actions/workflows/release.yaml/badge.svg)&nbsp;![Commit Activity](https://img.shields.io/github/commit-activity/t/subhamay-bhattacharyya-gha/github-action-template)&nbsp;![Last Commit](https://img.shields.io/github/last-commit/subhamay-bhattacharyya-gha/github-action-template)&nbsp;![Release Date](https://img.shields.io/github/release-date/subhamay-bhattacharyya-gha/github-action-template)&nbsp;![Repo Size](https://img.shields.io/github/repo-size/subhamay-bhattacharyya-gha/github-action-template)&nbsp;![File Count](https://img.shields.io/github/directory-file-count/subhamay-bhattacharyya-gha/github-action-template)&nbsp;![Issues](https://img.shields.io/github/issues/subhamay-bhattacharyya-gha/github-action-template)&nbsp;![Top Language](https://img.shields.io/github/languages/top/subhamay-bhattacharyya-gha/github-action-template)&nbsp;![Custom Endpoint](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/bsubhamay/06e35985280456b113298ed56c626e73/raw/github-action-template.json?)
+![Release](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/actions/workflows/release.yaml/badge.svg)&nbsp;![Commit Activity](https://img.shields.io/github/commit-activity/t/subhamay-bhattacharyya-gha/tf-yor-action)&nbsp;![Last Commit](https://img.shields.io/github/last-commit/subhamay-bhattacharyya-gha/tf-yor-action)&nbsp;![Release Date](https://img.shields.io/github/release-date/subhamay-bhattacharyya-gha/tf-yor-action)&nbsp;![Repo Size](https://img.shields.io/github/repo-size/subhamay-bhattacharyya-gha/tf-yor-action)&nbsp;![File Count](https://img.shields.io/github/directory-file-count/subhamay-bhattacharyya-gha/tf-yor-action)&nbsp;![Issues](https://img.shields.io/github/issues/subhamay-bhattacharyya-gha/tf-yor-action)&nbsp;![Top Language](https://img.shields.io/github/languages/top/subhamay-bhattacharyya-gha/tf-yor-action)&nbsp;![Custom Endpoint](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/bsubhamay/77f93a02120fa5702a93fe6060128580/raw/tf-yor-action.json?)
 
-A Template GitHub Repository to be used to create a composite action.
-
-## Action Name
-
-### Action Description
-
-This GitHub Action provides a reusable composite workflow that sets up Python and interacts with the GitHub API to post a comment on an issue, including a link to a created branch.
+A GitHub Composite Action to tag Terraform files with [Yor](https://github.com/bridgecrewio/yor) Git metadata and optionally commit those changes back to the repository.
 
 ---
 
-## Inputs
+## 🛠️ Action Name
 
-| Name           | Description         | Required | Default        |
-|----------------|---------------------|----------|----------------|
-| `input-1`      | Input description.  | No       | `default-value`|
-| `input-2`      | Input description.  | No       | `default-value`|
-| `input-3`      | Input description.  | No       | `default-value`|
-| `github-token` | GitHub token. Used for API authentication. | Yes | — |
+**Yor Git Metadata Tagging**
+
+### 📌 Description
+
+This GitHub Action runs [Yor](https://github.com/bridgecrewio/yor) to automatically tag Terraform files with Git metadata such as author, commit, and timestamp information. You can specify a release tag to checkout and optionally commit changes.
 
 ---
 
-## Example Usage
+## 📥 Inputs
+
+| Name             | Description                                                                                  | Required | Default     |
+|------------------|----------------------------------------------------------------------------------------------|----------|-------------|
+| `terraform-dir`  | Relative path to the directory containing Terraform configuration files.                     | No       | `tf`        |
+| `release-tag`    | Git release tag to check out. If omitted, defaults to the current branch.                    | No       | `""`        |
+| `commit-changes` | Whether to commit the changes made by Yor. Accepts `true` or `false`.                        | No       | `true`      |
+| `github-token`   | GitHub token used to authenticate Yor's Git operations and avoid rate limits.                | No       | `${{ github.token }}` |
+
+---
+
+## 🚀 Example Usage
 
 ```yaml
-name: Example Workflow
+name: Tag Terraform with Yor
 
 on:
-  issues:
-    types: [opened]
+  push:
+    branches:
+      - main
+      - feature/**
 
 jobs:
-  example:
+  tag-with-yor:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Run Custom Action
-        uses: your-org/your-action-repo@v1
+      - name: Run Yor Git Metadata Tagging
+        uses: subhamay-bhattacharyya-gha/tf-yor-action@v1
         with:
+          terraform-dir: infrastructure
+          release-tag: v1.2.3
+          commit-changes: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          input-1: your-value
-          input-2: another-value
-          input-3: something-else
+
 ```
 
 ## License
