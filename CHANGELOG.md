@@ -1,3 +1,22 @@
+# 1.0.0 (2025-07-17)
+
+
+### Bug Fixes
+
+* correct directory input reference in Yor action ([cb1e901](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/commit/cb1e9019f9e433f9eb2094d86577d4ea8e215ecc))
+* correct directory input syntax in Yor action ([d34b46c](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/commit/d34b46c2fc9a95c417d20247c99044f7ce2ca268))
+* correct formatting of directory input in Yor action ([62b087b](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/commit/62b087bbfbe1d09f2cbb84b7f2939b11f1bd3b9f))
+* correct typo in GitHub workspace reference in Yor action ([453d13d](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/commit/453d13de4eff163819825d24e4bc3e309dbf7959))
+* simplify directory input syntax in Yor action ([ecdf2fe](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/commit/ecdf2fec33dbae18820ef8b6300a20e55a078bca))
+* specify Yor version and architecture in setup step ([2e3c296](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/commit/2e3c296a6cdf067cc8c9891556c35ad3edb9fa41))
+* update Yor version and improve download process in setup step ([12f9315](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/commit/12f93158107a12f28d2b5ac3dbbc82eb0835d4e4))
+
+
+### Features
+
+* implement Yor Git metadata tagging action with configurable inputs ([0caf8cf](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/commit/0caf8cfbe7e2064150c4c58759720a6d411ecdfa))
+* update repository links and descriptions in documentation and package.json ([ab83e32](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/commit/ab83e325ac3932976178ae357db555f476422eed))
+
 ## [1.1.2](https://github.com/subhamay-bhattacharyya-gha/github-action-template/compare/v1.1.1...v1.1.2) (2025-05-21)
 
 
