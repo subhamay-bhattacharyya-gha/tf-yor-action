@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/compare/v1.0.0...v1.0.1) (2026-04-14)
+
+
+### Bug Fixes
+
+* upgrade Node.js version to 22.14.0 in GitHub Actions workflow ([6939b38](https://github.com/subhamay-bhattacharyya-gha/tf-yor-action/commit/6939b38517887749b605831af739c1ed311d5b65))
+
 # 1.0.0 (2025-07-17)
 
 
