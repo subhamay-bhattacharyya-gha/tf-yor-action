@@ -40,7 +40,7 @@ runs:
 
     - name: Checkout Repo
       id: checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: ${{ steps.set-ref.outputs.ref }}
         fetch-depth: 0
@@ -57,4 +57,4 @@ runs:
 
     - name: Commit tag changes
       if: ${{ inputs.commit-changes == 'true' }}
-      uses: stefanzweifel/git-auto-commit-action@v6
+      uses: stefanzweifel/git-auto-commit-action@v7
